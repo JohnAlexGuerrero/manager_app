@@ -1,11 +1,123 @@
 {% extends "index.html" %}
 
-{% block title %}New Provider{% endblock %}
+{% block title %}New invoice{% endblock %}
 
 {% block content %}
-    <form action="/providers/new" method="POST">
+    <a href="/providers/new">new proveedor</a>
+
+    <form action="/shoppings/new" method="POST">
         <label>Empresa: </label>
-        <input type="text" name="name" placeholder="" >
+        
+        <select name="provider" id="cars">
+            {% for prov in providers %}
+                <option value="0">seleccione empresa</option>
+                <option value="{{prov.id}}">{{prov.name}}</option>
+            {% endfor %}
+        </select>
+        <label>factura: </label>
+        <input type="text" name="number" placeholder="" >
+        <label>facturacion: </label>
+        <input type="date" name="createdAt" placeholder="" >
+        <label>vencimiento: </label>
+        <input type="date" name="expirationAt" placeholder="" >
+
+        <table border="1">
+            <tr>
+              <th>Item</th>
+              <th>Referencia</th>
+              <th>Description</th>
+              <th>Cant</th>
+              <th>V. Unit</th>
+              <th>Total</th>
+            </tr>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>
+                        <input type="text" value="" name="code">
+                    </td>
+                    <td>
+                        <input text="search" value="" name="product" id="product">
+                    </td>
+                    <td>
+                        <input type="number" value="" name="qty">
+                    </td>
+                    <td>
+                        <input type="number" value="" name="price">
+                    </td>
+                    <td>0.0</td>
+                </tr>
+            </tbody>
+          </table>
+
+          <table>
+            <tr>
+              <td>Total Bruto</td>
+              <td>153.883</td>
+
+            </tr>
+            <tr>
+                <td>Iva</td>
+                <td>29.237</td>
+            </tr>
+            <tr>
+                <td>Total a Pagar</td>
+                <td>$183.120</td>
+            </tr>
+        </table>
         <input type="submit" value="Guardar" />
     </form>
+
+    <ul id="items">
+        {% for item in items %}
+            <li id="{{item.id}}">{{item.name}}</li>
+        {% endfor %}
+    </ul>  
+
+    <ul id="prodItems">
+        <li id="2">no hay productos</li>
+    </ul>  
+
+
 {% endblock %}
+
+{% block script_js %}
+<script>
+    const name = document.getElementById('product')
+    const items = document.getElementById('items').children
+    const prodItems = document.getElementById('prodItems')
+
+    const products = []
+
+    for (let index = 0; index < items.length; index++) {
+        products.push(items.item(index))  
+    }
+
+    name.addEventListener("keyup", (e)=>{
+        var value = e.target.value.toLowerCase()
+        var list = products.filter(el => el.innerText.toLowerCase().indexOf(value) > -1)
+        console.log(list)
+
+        list.forEach(el => {
+            prodItems.appendChild(el)
+            console.log(el);
+        })
+
+
+    })
+
+
+
+    /*
+    $(document).ready(function(){
+        $("#myInput").on(, function() {
+          var value = $(this).val().toLowerCase();
+          $("#myTable tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
+      */
+</script>
+{% endblock script_js %}
+

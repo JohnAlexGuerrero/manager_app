@@ -4,4 +4,14 @@
 
 {% block content %}
     <h1>Shoppings</h1>
+
+    <p>{{num_items}} invoices</p>
+    <a href="/shoppings/new">Nueva factura</a>
+
+    <div>
+        {% for item in list_obj %}
+            <p>{{item.name}}</p>
+        {% endfor %}
+    </div>
+
 {% endblock %}
