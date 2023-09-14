@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+
+{% block title %}New Provider{% endblock %}
+
+{% block content %}
+    <form action="/providers/new" method="POST">
+        <label>Empresa: </label>
+        <input type="text" name="name" placeholder="" >
+        <input type="submit" value="Guardar" />
+    </form>
+{% endblock %}

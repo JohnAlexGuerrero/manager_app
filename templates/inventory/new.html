@@ -3,5 +3,25 @@
 {% block title %}New Product{% endblock %}
 
 {% block content %}
-    
+    <form action="/inventory/new" method="POST">
+        <label>Description producto: </label>
+        <input type="text" name="name" placeholder="" >
+        <label>Codigo producto: </label>
+        <input type="text" name="code" placeholder="" >
+        <label>Cantidad inicial: </label>
+        <input type="number" name="stock" placeholder="" >
+        <select name="unit" id="unit">
+            <option value="und">Und</option>
+            <option value="mtr">Mtr</option>
+            <option value="kl">Kl</option>
+            <option value="galon">Galon</option>
+            <option value="cuñete">Cuñete</option>
+            <option value="c#">C#</option>
+            <option value="C++">C++</option>
+            <option value="erlang">Erlang</option>
+        </select>
+        <label>Precio unitario: </label>
+        <input type="number" name="cost" placeholder="" >
+        <input type="submit" value="Guardar" />
+    </form>
 {% endblock %}
