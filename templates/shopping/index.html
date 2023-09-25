@@ -3,15 +3,86 @@
 {% block title %}Shoppings{% endblock %}
 
 {% block content %}
-    <h1>Shoppings</h1>
+    <h1>Facturacion</h1>
+    <button>Dashboard</button>
+    <button>Impresora</button>
 
-    <p>{{num_items}} invoices</p>
+    <p>Total de Facturas {{count_items}}</p>
+    <p>Total Seleccionado 0</p>
+    <p>Valor Total de Cartera $ {{total}}</p>
+
     <a href="/shoppings/new">Nueva factura</a>
 
     <div>
-        {% for item in list_obj %}
-            <p>{{item.name}}</p>
-        {% endfor %}
+        <table>
+            <tr>
+              <th>
+                <input type='checkbox' >
+              </th>
+              <th>status</th>
+              <th>Proveedor</th>
+              <th>Factura</th>
+              <th>Facturacion</th>
+              <th>Total</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+              <td>
+                <input type="checkbox" id="check{{item.id}}" onClick="selected({{item.id}})" value="off">
+              </td>
+              <td>vencido</td>
+              <td>{{item.provider.name.capitalize()}}</td>
+              <td>{{item.number.upper()}}</td>
+              <td>{{item.createdAt}}</td>
+              <td>
+                <input id="value{{item.id}}" type="text" value="$ {{item.value}}" disabled>
+              </td>
+            </tr>
+            {% endfor %}
+            
+            
+          </table>
+        
+          <div>
+            <p>Total a Pagar</p>
+            <input type="text" value="0" id="inpTotal">            
+            <button>Pagar</button>            
+          </div>
+        <div>
+            <p>Mostrar</p>
+            <select name="select">
+                <option value="value1" selected>10</option>
+                <option value="value2" >20</option>
+                <option value="value3">30</option>
+            </select>
+            <p>Factruas</p>
+        </div>
     </div>
 
+
 {% endblock %}
+
+{% block script_js %}
+  <script>
+    let isActive = false
+    let total = 0
+
+    const selected = e => {
+      const inputPay = document.getElementById('inpTotal')
+      const input = document.getElementById(`value${e}`)
+      isActive = !isActive
+
+      if(isActive){
+        total = input.value
+        input.removeAttribute("disabled")
+      }else{
+        input.setAttribute("disabled","off")
+        total = 0
+      }
+
+      inpTotal.value = total
+
+    }
+
+  </script>
+{% endblock script_js %}

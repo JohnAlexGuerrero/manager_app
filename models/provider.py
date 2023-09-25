@@ -1,6 +1,6 @@
 from db.database import database
 from peewee import Model
-from peewee import CharField, DecimalField, DateTimeField, ForeignKeyField, IntegerField
+from peewee import CharField, DecimalField, DateTimeField, ForeignKeyField, IntegerField, DateField
 
 from models.inventory import Product
 
@@ -20,8 +20,9 @@ class Invoice(BaseModel):
     value = DecimalField(decimal_places=2, max_digits=10, default=0)
     
 class ProductsInvoice(BaseModel):
-    invoice = ForeignKeyField(Invoice, backref='invoicesproducts')
-    product = ForeignKeyField(Product, backref='invoicesproducts')
+    invoice = ForeignKeyField(Invoice, backref='product_invoice')
+    product = ForeignKeyField(Product, backref='product_invoice')
     quantity = IntegerField(default=0)
     price = DecimalField(max_digits=10, decimal_places=2, default=0)
+    createdAt = DateField()
     

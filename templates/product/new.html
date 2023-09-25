@@ -1,0 +1,35 @@
+{% extends "index.html" %}
+
+{% block title %}Tutorial Flask: Miniblog{% endblock %}
+
+{% block content %}
+<form action="/products/new" method="POST">
+    <label>Description producto: </label>
+    <input type="text" name="name" placeholder="" >
+
+    <label>Codigo producto: </label>
+    <input type="text" name="code" placeholder="" >
+
+    <label>Cantida inicial: </label>
+    <input type="number" name="stock" placeholder="" value='0'>
+
+    <select name="unit" id="unit">
+        <option value="und">Und</option>
+        <option value="mtr">Mtr</option>
+        <option value="kl">Kl</option>
+        <option value="galon">Galon</option>
+        <option value="cuñete">Cuñete</option>
+        <option value="c#">C#</option>
+        <option value="C++">C++</option>
+        <option value="erlang">Erlang</option>
+    </select>
+
+    <label>Costo: </label>
+    <input type="number" name="cost" placeholder="" value='0.0'>
+
+    <label>Precio Unitario: </label>
+    <input type="number" name="price" placeholder="" value='0.0'>
+    
+    <input type="submit" value="Guardar" />
+</form>
+{% endblock %}

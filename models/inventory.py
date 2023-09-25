@@ -1,15 +1,24 @@
 from db.database import database
 from peewee import Model
-from peewee import CharField, IntegerField, DecimalField
+from peewee import CharField, IntegerField, DecimalField, ForeignKeyField, DateField
+
+from models.product import Product
 
 class BaseModel(Model):
     class Meta:
         database=database
 
-class Product(BaseModel):
-    name = CharField(max_length=100, unique=True)
-    code = CharField(max_length=10, unique=True)
+class Inventory(BaseModel):
+    product = ForeignKeyField(Product, backref='inventories')
     stock = IntegerField(default=0)
-    unit = CharField(max_length=10, default='und', unique=False)
-    cost = DecimalField(max_digits=10 ,decimal_places=2, default=0.0)
+    cost = DecimalField(max_digits=10 , decimal_places=2, default=0.0)
+    price = DecimalField(max_digits=10 ,decimal_places=2, default=0.0)
+    createdAt = DateField()
+    updatedAt = DateField()
 
+# class Category(BaseModel):
+#     name = CharField(max_length=50, unique=True)
+
+# class ProductCategory(BaseModel):
+#     product = ForeignKeyField(Product, backref='productscategory')
+#     category = ForeignKeyField(Category, backref='categories')

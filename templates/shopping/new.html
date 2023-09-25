@@ -5,6 +5,43 @@
 {% block content %}
     <a href="/providers/new">new proveedor</a>
 
+    <div>
+        <input type="search" placeholder="Find product..." id="search">
+
+        <table border="1">
+            <tr>
+              <th>Item</th>
+              <th>Referencia</th>
+              <th>Description</th>
+              <th>Cant</th>
+              <th>V. Unit</th>
+              <th>Total</th>
+              <th>action</th>
+            </tr>
+            <tbody id="table-inventory">
+            </tbody>
+        </table>
+    
+    </div>
+
+    
+      <table>
+        <tr>
+          <td>Total Bruto</td>
+          <td>153.883</td>
+
+        </tr>
+        <tr>
+            <td>Iva</td>
+            <td>29.237</td>
+        </tr>
+        <tr>
+            <td>Total a Pagar</td>
+            <td>$183.120</td>
+        </tr>
+    </table>
+
+   
     <form action="/shoppings/new" method="POST">
         <label>Empresa: </label>
         
@@ -21,103 +58,57 @@
         <label>vencimiento: </label>
         <input type="date" name="expirationAt" placeholder="" >
 
-        <table border="1">
-            <tr>
-              <th>Item</th>
-              <th>Referencia</th>
-              <th>Description</th>
-              <th>Cant</th>
-              <th>V. Unit</th>
-              <th>Total</th>
-            </tr>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>
-                        <input type="text" value="" name="code">
-                    </td>
-                    <td>
-                        <input text="search" value="" name="product" id="product">
-                    </td>
-                    <td>
-                        <input type="number" value="" name="qty">
-                    </td>
-                    <td>
-                        <input type="number" value="" name="price">
-                    </td>
-                    <td>0.0</td>
-                </tr>
-            </tbody>
-          </table>
-
-          <table>
-            <tr>
-              <td>Total Bruto</td>
-              <td>153.883</td>
-
-            </tr>
-            <tr>
-                <td>Iva</td>
-                <td>29.237</td>
-            </tr>
-            <tr>
-                <td>Total a Pagar</td>
-                <td>$183.120</td>
-            </tr>
-        </table>
+        
         <input type="submit" value="Guardar" />
     </form>
-
-    <ul id="items">
-        {% for item in items %}
-            <li id="{{item.id}}">{{item.name}}</li>
-        {% endfor %}
-    </ul>  
-
-    <ul id="prodItems">
-        <li id="2">no hay productos</li>
-    </ul>  
-
 
 {% endblock %}
 
 {% block script_js %}
 <script>
-    const name = document.getElementById('product')
-    const items = document.getElementById('items').children
-    const prodItems = document.getElementById('prodItems')
+   
+    const search = document.getElementById('search')
+    const tableInventory = document.getElementById('table-inventory')
+    const itemsData = {{items|tojson}}
 
-    const products = []
-
-    for (let index = 0; index < items.length; index++) {
-        products.push(items.item(index))  
-    }
-
-    name.addEventListener("keyup", (e)=>{
-        var value = e.target.value.toLowerCase()
-        var list = products.filter(el => el.innerText.toLowerCase().indexOf(value) > -1)
-        console.log(list)
-
+    getInventory = (list)=>{
+        var idx = 1
         list.forEach(el => {
-            prodItems.appendChild(el)
-            console.log(el);
+            const tr = document.createElement('tr')
+
+            tr.innerHTML = `
+            <tr>
+                <td>${idx}</td>
+                <td>${el.name}</td>
+                <td>${el.code}</td>
+                <td>${el.stock}</td>
+                <td>${el.cost}</td>
+                <td>0.0</td>
+                <td>
+                    <button type='button'>agregar</button>
+                </td>
+            </tr>
+            `
+            tableInventory.appendChild(tr)
+            idx += 1
         })
+    }
+    
+    
+    search.addEventListener("input", (e)=>{
+        var value = e.target.value.toLowerCase()
 
+        if(value.trim() === ''){
 
+        }else{
+            list = itemsData.filter(el => el.name.toLowerCase().indexOf(value) > -1)       
+        }
+        getInventory(list)
     })
 
+    getInventory(itemsData)
 
-
-    /*
-    $(document).ready(function(){
-        $("#myInput").on(, function() {
-          var value = $(this).val().toLowerCase();
-          $("#myTable tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-          });
-        });
-      });
-      */
 </script>
+
 {% endblock script_js %}
 

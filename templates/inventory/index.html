@@ -6,13 +6,30 @@
     {{ num_items }} products
 
     <div>
-        <input type="search" placeholder="Find product..." >
-        <a href="/inventory/new" >New</a>
+      <input type="search" placeholder="Find product..." >
+      <a href="/products/add-product" >New</a>
     </div>
 
-    {% for item in items %}
-        <ul>
-            <li>{{item.name}}</li>
-        </ul>  
-    {% endfor %}
+    <h2>HTML Table</h2>
+
+    <table>
+      <tr>
+        <th>Referencia</th>
+        <th>Description</th>
+        <th>Disponible</th>
+        <th>Unidad</th>
+        <th>Precio</th>
+      </tr>
+      {% for item in items %}
+      <tr>
+        <td>{{item.product.code}}</td>
+        <td>{{item.product.name}}</td>
+        <td>{{item.stock}}</td>
+        <td>{{item.product.unit}}</td>
+        <td>$ {{item.price}}</td>
+      </tr>
+      {% endfor %}
+
+    </table>
+
 {% endblock %}

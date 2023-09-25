@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+{% block title %}Tutorial Flask: Miniblog{% endblock %}
+
+{% block content %}
+    {{ num_items }} products
+
+    <div>
+        <input type="search" placeholder="Find product..." >
+        <a href="/products/new" >New</a>
+    </div>
+
+    
+
+{% endblock %}

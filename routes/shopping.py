@@ -1,23 +1,32 @@
 from flask import Blueprint
 from flask import render_template, redirect, request
 
+import pandas as pd
+from peewee import fn
+
 from models.provider import Invoice, Provider
 from models.inventory import Product
+from models.shopping import Shopping
 
 shopping = Blueprint('shoppings', __name__)
 
 @shopping.route('/shoppings')
 def home():
-    list_obj = Provider.select()
-     
-    return render_template('shopping/index.html', list_obj=list_obj, num_items=len(list_obj))
+    sum_total = Shopping.select(fn.Sum(Shopping.value)).scalar()
+    shoppings = Shopping.select().order_by(Shopping.createdAt.desc())
+    
+    return render_template('shopping/index.html', items=shoppings, count_items=len(shoppings), total=sum_total)
 
 @shopping.route('/shoppings/new', methods=['GET'])
 def new_invoice():
     providers = Provider.select(Provider.name)
-    products = Product.select()
+    products = Product.select().dicts()
+    items = [item for item in products]
+    # print(type(json.dumps(model_to_dict(products))))
+    print((items))
+    print(type(items))
     
-    return render_template('shopping/new.html', providers=providers, items=products)
+    return render_template('shopping/new.html', providers=providers, items=items)
 
 @shopping.route('/shoppings/new', methods=['POST'])
 def add_invoice():
