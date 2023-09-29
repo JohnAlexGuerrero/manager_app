@@ -21,13 +21,13 @@
         <th>Precio</th>
       </tr>
       {% for item in items %}
-      <tr>
-        <td>{{item.product.code}}</td>
-        <td>{{item.product.name}}</td>
-        <td>{{item.stock}}</td>
-        <td>{{item.product.unit}}</td>
-        <td>$ {{item.price}}</td>
-      </tr>
+        <tr id='{{item.product.id}}'>
+          <td>{{item.product.code}}</td>
+          <td>{{item.product.name}}</td>
+          <td>{{item.stock}}</td>
+          <td>{{item.product.unit}}</td>
+          <td>$ {{item.price}}</td>
+        </tr>
       {% endfor %}
 
     </table>

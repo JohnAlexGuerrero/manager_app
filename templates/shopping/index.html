@@ -3,61 +3,59 @@
 {% block title %}Shoppings{% endblock %}
 
 {% block content %}
-    <h1>Facturacion</h1>
-    <button>Dashboard</button>
-    <button>Impresora</button>
-
-    <p>Total de Facturas {{count_items}}</p>
-    <p>Total Seleccionado 0</p>
-    <p>Valor Total de Cartera $ {{total}}</p>
-
-    <a href="/shoppings/new">Nueva factura</a>
-
-    <div>
-        <table>
-            <tr>
-              <th>
-                <input type='checkbox' >
-              </th>
-              <th>status</th>
-              <th>Proveedor</th>
-              <th>Factura</th>
-              <th>Facturacion</th>
-              <th>Total</th>
-            </tr>
-            {% for item in items %}
-            <tr>
-              <td>
-                <input type="checkbox" id="check{{item.id}}" onClick="selected({{item.id}})" value="off">
-              </td>
-              <td>vencido</td>
-              <td>{{item.provider.name.capitalize()}}</td>
-              <td>{{item.number.upper()}}</td>
-              <td>{{item.createdAt}}</td>
-              <td>
-                <input id="value{{item.id}}" type="text" value="$ {{item.value}}" disabled>
-              </td>
-            </tr>
-            {% endfor %}
-            
-            
-          </table>
-        
-          <div>
-            <p>Total a Pagar</p>
-            <input type="text" value="0" id="inpTotal">            
-            <button>Pagar</button>            
-          </div>
-        <div>
-            <p>Mostrar</p>
-            <select name="select">
-                <option value="value1" selected>10</option>
-                <option value="value2" >20</option>
-                <option value="value3">30</option>
-            </select>
-            <p>Factruas</p>
-        </div>
+<div class="container">
+  <div class="row">
+    <div class="col p-3">
+      <h1 class="h2 text-muted">Facturacion</h1>
     </div>
+    <div class="col p-3">
+      <button type="button" class="btn btn-light">Dashboard</button>
+      <button type="button" class="btn btn-light">Impresora</button>
+
+    </div>
+    <div class="col p-3">
+      <a href="/shoppings/new" class="btn btn-light">Nueva factura</a>
+    </div>
+  </div>
+
+  <div class="d-flex">
+    <div class="p-3">
+      <p class="m-0">Total de Facturas</p>
+      <p class="m-0 text-center">{{count_items}}</p>
+    </div>
+    <div class="p-3">
+      <p>Total Seleccionado</p>
+      <p class="m-0 text-center">{{0}}</p>
+    </div>
+    <div class="p-3">
+      <p>Valor Total de Cartera</p>
+      <p class="m-0 text-center"> $ {{total}}</p>
+    </div>
+  </div>
+
+
+  <div>
+    <div class="container mt-2">
+      <ol class="list-group">
+          <div class="card mb-3">
+            <div class="card-body d-flex justify-content-between">
+              <input type="checkbox" id="check_9" onClick="" value="off">
+              <div class="px-1">
+                <p class="h5 text-uppercase">aceros y perfiles hr</p>
+                <p class="h6 text-uppercase">n. rm8978</p>
+              </div>
+              <input type="text" class="m-0 p-0" value="$ 343.65" name="email" disabled>
+              <div class="btn-group">
+                <button type="button" class="btn">Apple</button>
+                <button type="button" class="btn">Samsung</button>
+                <button type="button" class="btn">Sony</button>
+              </div> 
+            </div>
+          </div>
+        </li>
+    </div>
+          
+  </div>
 
 
 {% endblock %}

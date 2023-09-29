@@ -3,6 +3,27 @@
 {% block title %}New invoice{% endblock %}
 
 {% block content %}
+
+    <form action="/shoppings/new" method="POST">
+        <label>Empresa: </label>
+        
+        <select name="provider" id="cars">
+            <option value="0">seleccione empresa</option>
+            {% for prov in providers %}
+                <option value="{{prov.id}}">{{prov.name}}</option>
+            {% endfor %}
+        </select>
+        <label>factura: </label>
+        <input type="text" name="number" placeholder="" >
+        <label>facturacion: </label>
+        <input type="date" name="createdAt" placeholder="" >
+        <label>vencimiento: </label>
+        <input type="date" name="expirationAt" placeholder="" >
+
+        
+        <input type="submit" value="Guardar" />
+    </form>
+
     <a href="/providers/new">new proveedor</a>
 
     <div>
@@ -42,25 +63,7 @@
     </table>
 
    
-    <form action="/shoppings/new" method="POST">
-        <label>Empresa: </label>
-        
-        <select name="provider" id="cars">
-            {% for prov in providers %}
-                <option value="0">seleccione empresa</option>
-                <option value="{{prov.id}}">{{prov.name}}</option>
-            {% endfor %}
-        </select>
-        <label>factura: </label>
-        <input type="text" name="number" placeholder="" >
-        <label>facturacion: </label>
-        <input type="date" name="createdAt" placeholder="" >
-        <label>vencimiento: </label>
-        <input type="date" name="expirationAt" placeholder="" >
 
-        
-        <input type="submit" value="Guardar" />
-    </form>
 
 {% endblock %}
 

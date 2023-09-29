@@ -11,7 +11,6 @@ def new_provider():
 
 @provider.route('/providers/new', methods=['POST'])
 def add_provider():
-    name = request.form['name']
-    
-    provider = Provider.create(name=name)
+    name, nit, address, city, sellerman, phone, num_mobil = [fm for fm in request.form.values()]
+    provider = Provider.create(name=name, nit=nit, city=city, sellerman=sellerman, phone=phone, num_mobil=num_mobil)
     return redirect('/shoppings/new')
