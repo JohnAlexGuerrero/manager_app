@@ -3,33 +3,261 @@
 {% block title %}Tutorial Flask: Miniblog{% endblock %}
 
 {% block content %}
-    {{ num_items }} products
 
-    <div>
-      <input type="search" placeholder="Find product..." >
-      <a href="/products/add-product" >New</a>
+  <div class="container p-3">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <h2 class="">Inventory</h2>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Features</a>
+              </li>
+
+              <li class="nav-item dropdown border rounded-3 d-flex">
+                <a class="nav-link dropdown-toggle " data-bs-toggle="dropdown" href="#" role="button"       aria-expanded="false">Category
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Separated link</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"></a>
+              </li>
+            </ul>
+          </div>
+          <div class="">
+            <button class="btn btn-outline-light text-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
+              Nuevo Producto
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
+
+    <div class="container p-3">
+      {{ num_items }} products
+      
+      <div class="container mt-3">
+        <div id="accordion">
+          <ul class="list-group">
+          
+            {% for item in items %}
+
+              <li class="list-group-item card">
+                <div id='{{item.product.id}}'>
+                  <td>
+                    <input type="checkbox" >
+                  </td>
+                  <td>{{item.product.code}}</td>
+                  <td class="text-uppercase">{{item.product.name}}</td>
+                  <td>{{item.stock}} {{item.product.unit}}</td>
+                  <td>$ {{item.price}}</td>
+                  <td>{{'20/23'}}</td>
+                  <td>
+                    <a type="button" data-bs-toggle="collapse" href="#accordin_{{item.id}}">...</a>
+                  </td>
+                </div>
+                <div id="accordin_{{item.id}}" class="collapse show" data-bs-parent="#accordin">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-3">
+                        <img src="cinqueterre.jpg" class="rounded border" alt="Cinque Terre" width="304" height="236">
+                      </div>
+                      <div class="col-sm-9">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="">
+                              <label for="email" class="form-label p-0 mb-0">Name</label>
+                              <input type="email" class="form-control text-uppercase border-0 border-bottom" id="email" value="{{item.product.name}}" name="email">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="">
+                              <label for="email" class="form-label p-0 mb-0">Price</label>
+                              <input type="email" class="form-control border-0 border-bottom" id="email" value="${{item.price}} 105%" name="email">
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <div class="">
+                              <label for="email" class="form-label p-0 mb-0">Collection</label>
+                              <input type="email" class="form-control border-0 border-bottom" id="email" value="Estucos" name="email">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md">
+                            <div class="mb-3 mt-3">
+                              <label for="email" class="form-label p-0 mb-0">SKU:</label>
+                              <input type="text" class="form-control border-0 border-bottom" id="email" value="399-elz" name="email">
+                            </div>
+                          </div>
+                          <div class="col-md">
+                            <div class="mb-3 mt-3">
+                              <label for="email" class="form-label p-0 mb-0">Barcode</label>
+                              <input type="email" class="form-control border-0 border-bottom" id="email" value="{{item.product.code}}" name="email">
+                            </div>
+                          </div>
+                          <div class="col-md">
+                            <div class="mb-3 mt-3">
+                              <label for="email" class="form-label p-0 mb-0">Cost</label>
+                              <input type="email" class="form-control border-0 border-bottom" id="email" value="${{item.cost}}" name="email">
+                            </div>
+                          </div>
+                          <div class="col-md">
+                            <div class="mb-3 mt-3">
+                              <label for="email" class="form-label">Email:</label>
+                              <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md">
+                            <div class="mb-3 mt-3">
+                              <label for="email" class="form-label">Email:</label>
+                              <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                            </div>
+                          </div>
+                          <div class="col-md">
+                            <div class="mb-3 mt-3">
+                              <label for="email" class="form-label">Email:</label>
+                              <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                            </div>
+                          </div>
+                          <div class="col-md">
+                            <div class="mb-3 mt-3">
+                              <label for="email" class="form-label">Email:</label>
+                              <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                            </div>
+                          </div>
+                          <div class="col-md">
+                            <div class="mb-3 mt-3">
+                              <label for="email" class="form-label">Email:</label>
+                              <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md">
+                            <div class="mb-3 mt-3">
+                              <label for="email" class="form-label">Email:</label>
+                              <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                            </div>
+                          </div>
+                          <div class="col-md">
+                            <div class="mb-3 mt-3">
+                              <label for="email" class="form-label">Email:</label>
+                              <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                            </div>
+                          </div>
+                          <div class="col-md">
+                            <div class="mb-3 mt-3">
+                              <label for="email" class="form-label">Email:</label>
+                              <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                            </div>
+                          </div>
+                          <div class="col-md">
+                            <div class="mb-3 mt-3">
+                              <label for="email" class="form-label">Email:</label>
+                              <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            
+            {% endfor %}
+          </ul> 
+
+        </div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="?page={{(num_pagination + 1) - num_pagination}}">Primero</a>
+            </li>
+            {% for num in range(1, num_pagination+1) %}
+              <li class="page-item"><a class="page-link" href="?page={{num}}">{{num}}</a></li>
+            {% endfor %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{num_pagination}}">Ultimo</a>
+            </li>
+          </ul>
+        </nav>
     </div>
+  </div>
 
-    <h2>HTML Table</h2>
 
-    <table>
-      <tr>
-        <th>Referencia</th>
-        <th>Description</th>
-        <th>Disponible</th>
-        <th>Unidad</th>
-        <th>Precio</th>
-      </tr>
-      {% for item in items %}
-        <tr id='{{item.product.id}}'>
-          <td>{{item.product.code}}</td>
-          <td>{{item.product.name}}</td>
-          <td>{{item.stock}}</td>
-          <td>{{item.product.unit}}</td>
-          <td>$ {{item.price}}</td>
-        </tr>
-      {% endfor %}
-
-    </table>
 
 {% endblock %}
+
+{% block content_cavas %}
+<div class="offcanvas offcanvas-end" id="demo">
+    <div class="offcanvas-header">
+      <h1 class="offcanvas-title">Heading</h1>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <form action="/products/new" method="POST">
+        <div class="mb-3 mt-3">
+          <label for="desc" class="form-label">Descripción:</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter description product" name="name">
+        </div>
+        <div class="mb-3">
+          <label for="codigo" class="form-label">Codigo:</label>
+          <input type="text" class="form-control" id="code" placeholder="Enter codebar" name="code">
+        </div>
+        <div class="row">
+            <label for="cant" class="form-label">Cantidad Inicial:</label>
+            <div class="col">
+              <input type="number" class="form-control" placeholder="Enter quantity" name="stock" value="0">
+            </div>
+            <div class="col">
+                <select name="unit" id="unit" class="form-select form-select-sm">
+                    <option value="und">Und</option>
+                    <option value="mtr">Mtr</option>
+                    <option value="kl">Kl</option>
+                    <option value="galon">Galon</option>
+                    <option value="cuñete">Cuñete</option>
+                    <option value="c#">C#</option>
+                    <option value="C++">C++</option>
+                    <option value="erlang">Erlang</option>
+                </select>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="cost" class="form-label">Costo Unitario:</label>
+            <input type="number" class="form-control" id="cost" placeholder="Enter cost" name="cost"  value='0.0'>
+          </div>
+          <div class="mb-3">
+            <label for="price" class="form-label">Precio Unitario:</label>
+            <input type="number" class="form-control" id="price" placeholder="Enter price" name="price"  value='0.0'>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+  
+
+{% endblock content_cavas %}
+
+https://dribbble.com/shots/5489408/attachments/5489408-Inventory-Management?mode=media

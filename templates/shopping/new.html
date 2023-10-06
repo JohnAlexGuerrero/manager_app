@@ -3,113 +3,362 @@
 {% block title %}New invoice{% endblock %}
 
 {% block content %}
-
-    <form action="/shoppings/new" method="POST">
-        <label>Empresa: </label>
-        
-        <select name="provider" id="cars">
-            <option value="0">seleccione empresa</option>
-            {% for prov in providers %}
-                <option value="{{prov.id}}">{{prov.name}}</option>
-            {% endfor %}
-        </select>
-        <label>factura: </label>
-        <input type="text" name="number" placeholder="" >
-        <label>facturacion: </label>
-        <input type="date" name="createdAt" placeholder="" >
-        <label>vencimiento: </label>
-        <input type="date" name="expirationAt" placeholder="" >
-
-        
-        <input type="submit" value="Guardar" />
-    </form>
-
-    <a href="/providers/new">new proveedor</a>
-
-    <div>
-        <input type="search" placeholder="Find product..." id="search">
-
-        <table border="1">
-            <tr>
-              <th>Item</th>
-              <th>Referencia</th>
-              <th>Description</th>
-              <th>Cant</th>
-              <th>V. Unit</th>
-              <th>Total</th>
-              <th>action</th>
-            </tr>
-            <tbody id="table-inventory">
-            </tbody>
-        </table>
-    
+<div class="container invoice">
+    <div class="invoice-header">
+      <div class="row">
+        <div class="col-xs-8">
+          <h1>Compra</h1>
+          <h4 class="text-muted">NO: 554775/R1 | Date: 01/01/2015</h4>
+        </div>
     </div>
+    <div class="invoice-body">
+        <form action="/shoppings/new" method="POST">
+            <div class="row">
+                <div class="col-6">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Company Details</h3>
+                    </div>
+                    <div class="panel-body">
+                      <dl class="dl-horizontal">
+                        <dt>Name</dt>
+                        <dd><strong>Acme Corporation</strong></dd>
+                        <dt>Industry</dt>
+                        <dd>
+                            <select name="provider" id="companies" class="form-select form-select-sm">
+                                <option value="0">seleccione empresa</option>
+                                {% for prov in providers %}
+                                    <option value="{{prov.id}}">
+                                        <h1 class="text-uppercase">{{prov.name}}</h1>
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <div class="container-fluid mt-3">
+                                <button class="btn btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
+                                    Nuevo Proveedor
+                                </button>
+                            </div>
+                        </dd>
 
-    
-      <table>
-        <tr>
-          <td>Total Bruto</td>
-          <td>153.883</td>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="panel panel-default">
+                    <div class="panel-heading">
+                      <h3 class="panel-title">Invoice Details</h3>
+                    </div>
+                    <div class="panel-body">
+                      <dl class="dl-horizontal">
+                        <dt>No.</dt>
+                        <dd>
+                            <input type="text" name="number" placeholder="554775/R1" > 
+                        </dd>
+                        <dt>Fecha</dt>
+                        <dd>
+                            <input type="date" name="createdAt" placeholder="" >
+                        </dd>
+                        <dt>Vence</dt>
+                        <dd>
+                            <input type="date" name="expirationAt" placeholder="" >
+                        </dd>
+                        
+                    </div>
+                  </div>
+                </div>
+            </div>
 
-        </tr>
-        <tr>
-            <td>Iva</td>
-            <td>29.237</td>
-        </tr>
-        <tr>
-            <td>Total a Pagar</td>
-            <td>$183.120</td>
-        </tr>
-    </table>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Services / Products</h3>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Buscar Productos
+                  </button>
+                </div>
+                <table class="table table-bordered table-condensed">
+                  <thead>
+                    <tr>
+                      <th>Item / Details</th>
+                      <th class="text-center colfix">Unit Cost</th>
+                      <th class="text-center colfix">Sum Cost</th>
+                      <th class="text-center colfix">Discount</th>
+                      <th class="text-center colfix">Tax</th>
+                      <th class="text-center colfix">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="items-table">
+                    
+          
+                    <tr>
+                      <td>
+                        <input type="text" >
+                      </td>
+                      <td class="text-right">
+                        <span class="mono">$</span>
+                      </td>
+                      <td class="text-right">
+                        <span class="mono">$0,0</span>
+                      </td>
+                      <td class="text-right">
+                        <span class="mono">$0.0</span>
+                      </td>
+                      <td class="text-right">
+                        <span class="mono">+ $0</span>
+                      </td>
+                      <td class="text-right">
+                        <strong class="mono">$0</strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="panel panel-default">
+                <table class="table table-bordered table-condensed">
+                  <thead>
+                    <tr>
+                      <td class="text-center col-xs-1">Sub Total</td>
+                      <td class="text-center col-xs-1">Discount</td>
+                      <td class="text-center col-xs-1">Total</td>
+                      <td class="text-center col-xs-1">Tax</td>
+                      <td class="text-center col-xs-1">Final</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th class="text-center rowtotal mono">$0,0</th>
+                      <th class="text-center rowtotal mono">$0,0</th>
+                      <th class="text-center rowtotal mono">$0,0</th>
+                      <th class="text-center rowtotal mono">$0,0</th>
+                      <th class="text-center rowtotal mono">$0,0</th>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+            
+            <input type="submit" value="Guardar" />
+        </form>
+      
+      
+      <div class="row">
+        <div class="col-xs-7">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <i>Comments / Notes</i>
+              <hr style="margin:3px 0 5px" /> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit repudiandae numquam sit facere blanditiis, quasi distinctio ipsam? Libero odit ex expedita, facere sunt, possimus consectetur dolore, nobis iure amet vero.
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-5">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Payment Method</h3>
+            </div>
+            <div class="panel-body">
+              <p>For your convenience, you may deposite the final ammount at one of our banks</p>
+              <ul class="list-unstyled">
+                <li>Alpha Bank - <span class="mono">MO123456789456123</span></li>
+                <li>Beta Bank - <span class="mono">MO123456789456123</span></li>
+                <li>Gamma Bank - <span class="mono">MO123456789456123</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+    <div class="invoice-footer">
+      Thank you for choosing our services.
+      <br/> We hope to see you again soon
+      <br/>
+      <strong>~ACME~</strong>
+    </div>
+  </div>
 
-   
+
+  
+
 
 
 {% endblock %}
 
+{% block content_cavas %}
+<div class="offcanvas offcanvas-end" id="demo">
+    <div class="offcanvas-header">
+      <h1 class="offcanvas-title">Nuevo Proveedor</h1>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form action="/providers/new" method="POST">
+            <div class="mb-3 mt-3">
+              <label for="empresa" class="form-label">Empresa:</label>
+              <input type="text" class="form-control" id="company" placeholder="Enter email" name="name">
+            </div>
+            <div class="mb-3">
+              <label for="nit" class="form-label">Nit:</label>
+              <input type="text" class="form-control" id="nit" placeholder="Enter password" name="nit">
+            </div>
+            <div class="mb-3 mt-3">
+              <label for="direccion" class="form-label">Direccion:</label>
+              <input type="text" class="form-control" id="address" placeholder="Enter email" name="address">
+            </div>
+            <div class="mb-3">
+              <label for="city" class="form-label">Ciudad:</label>
+              <input type="text" class="form-control" id="city" placeholder="Enter password" name="city">
+            </div>
+            <div class="mb-3">
+              <label for="sellemar" class="form-label">Vendedor:</label>
+              <input type="text" class="form-control" id="sellerman" placeholder="Enter password" name="sellerman">
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Telefonos de Contacto:</label>
+              <div class="row">
+                <div class="col">
+                  <input type="number" class="form-control" placeholder="Enter email" name="phone">
+                </div>
+                <div class="col">
+                  <input type="number" class="form-control" placeholder="Enter password" name="num_mobil">
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-secondary">Submit</button>
+        </form>  
+    </div>
+</div>
+  
+
+{% endblock content_cavas %}
+
+{% block content_modal %}
+<div class="container mt-3">
+    <h3>Large Modal Example</h3>
+    <p>Click on the button to open the modal.</p>
+    
+
+  </div>
+  
+  <div class="modal" id="myModal">
+    <div class="modal-dialog modal-fullscreen">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modal Heading</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="container mt-3">
+                <h2>Striped Rows</h2>
+                <p>The .table-striped class adds zebra-stripes to a table:</p>            
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Referencia</th>
+                      <th>
+                        Descripcion
+                      </th>
+                      <th>Cantidad</th>
+                      <th>Precion Unitario</th>
+                      <th>Total</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in items %}
+                    <form id="form_{{item.id}}">
+                      <tr>
+                        <td>{{item.id}}</td>
+                        <td >
+                          <input type="text" name="name" class="text-uppercase" value="{{item.name}}">
+                        </td>
+                        <td>
+                            <input type="number" value="0" name="quantity" onchange="changeTotal()">
+                        </td>
+                        <td>
+                            <input type="number" value="0" name="price" onchange="changeTotal()">
+                        </td>
+                        <td id="total_{{item.id}}">
+                          0,0
+                        </td>
+                        <td>
+                          <button type="button" class="btn" name="btn" onclick="addItemOrder({{item.id}})">
+                            Agregar
+                          </button>
+                        </td>
+                      </tr>
+                    </form>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+</div>
+  
+{% endblock content_modal %}
+
 {% block script_js %}
-<script>
-   
-    const search = document.getElementById('search')
-    const tableInventory = document.getElementById('table-inventory')
-    const itemsData = {{items|tojson}}
+<script type="text/javascript">
+  orderItems = []
 
-    getInventory = (list)=>{
-        var idx = 1
-        list.forEach(el => {
-            const tr = document.createElement('tr')
+  const addItemOrder = idItem => {
+    const form = document.getElementById(`form_${idItem}`)
+    let name = form.name.value
+    let qty = form.quantity.value
+    let price = form.price.value
 
-            tr.innerHTML = `
-            <tr>
-                <td>${idx}</td>
-                <td>${el.name}</td>
-                <td>${el.code}</td>
-                <td>${el.stock}</td>
-                <td>${el.cost}</td>
-                <td>0.0</td>
-                <td>
-                    <button type='button'>agregar</button>
-                </td>
-            </tr>
-            `
-            tableInventory.appendChild(tr)
-            idx += 1
-        })
-    }
+    const total = document.getElementById(`total_${idItem}`)
+    total.textContent = `$ ${price * qty}`
+
+    orderItems.push({name, qty, price})
+    console.log(orderItems)
+  }
+
+  var itemsTable = document.getElementById('items-table')
+
+  orderItems.forEach(el =>{
+    const tr = document.createElement("tr")
+
+    tr.innerHTML = `
+    <tr>
+      <td>
+        ${el.name}
+      </td>
+      <td class="text-right">
+        <span class="mono">$ ${el.qty}</span>
+      </td>
+      <td class="text-right">
+        <span class="mono">$ ${el.price}</span>
+      </td>
+      <td class="text-right">
+        <span class="mono"> $ ${el.price * el.qty}</span>
+      </td>
+      <td class="text-right">
+        <span class="mono">+ $3,240.00</span>
+        <br>
+        <small class="text-muted">VAT 20%</small>
+      </td>
+      <td class="text-right">
+        <strong class="mono">$19,440.00</strong>
+        <br>
+        <small class="text-muted mono">$16,200.00</small>
+      </td>
+    </tr>
+    `
+
+    itemsTable.appendChild(tr)
+  })
     
-    
-    search.addEventListener("input", (e)=>{
-        var value = e.target.value.toLowerCase()
-
-        if(value.trim() === ''){
-
-        }else{
-            list = itemsData.filter(el => el.name.toLowerCase().indexOf(value) > -1)       
-        }
-        getInventory(list)
-    })
-
-    getInventory(itemsData)
 
 </script>
 

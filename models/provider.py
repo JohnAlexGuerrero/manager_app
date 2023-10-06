@@ -9,9 +9,9 @@ class BaseModel(Model):
 class Provider(BaseModel):
     name = CharField(max_length=100, unique=True)
     nit = CharField(max_length=15, unique=True)
-    address = CharField(max_length=50)
-    city = CharField(max_length=50)
-    sellerman = CharField(max_length=50)
+    address = CharField(max_length=50, null=True)
+    city = CharField(max_length=50, null=True)
+    sellerman = CharField(max_length=50, null=True)
     phone = CharField(max_length=11, null=True, default='888-8888-888')
     num_mobil = CharField(max_length=11, null=True, default='888-8888-888')
     

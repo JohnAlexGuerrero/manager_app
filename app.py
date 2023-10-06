@@ -8,18 +8,21 @@ from routes.product import product
 
 from db.database import database
 from models.inventory import Inventory#, Category, ProductCategory
-from models.product import Product#, Category, ProductCategory
+from models.product import Product, Collection #, Category, ProductCategory
 from models.provider import Provider
 from models.client import Client
 from models.shopping import Shopping, ShoppingsOrder
+from models.payment import Payment
+
 
 app = Flask(__name__)
 
 database.create_tables([
-    Product, Inventory, #Category, ProductCategory
+    Product, Inventory, Collection, #ProductCategory
     Provider,
-    # Client,
-    Shopping, ShoppingsOrder
+#     # Client,
+    Shopping, ShoppingsOrder,
+    Payment    
     ])
 
 app.register_blueprint(inventory)

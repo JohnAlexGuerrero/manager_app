@@ -6,6 +6,10 @@ from datetime import datetime
 
 product = Blueprint('products', __name__)
 
+# @product.route('/product/<str: product_code>')
+# def show_product(product_code):
+#     print(product_code)
+
 @product.route('/products')
 def index():
     return render_template('product/index.html')
@@ -18,5 +22,5 @@ def new_form():
 def new():
     name, code, stock, unit, cost, price = [field for field in request.form.values()]
     product = Product.create(name=name, code=code, unit=unit, createdAt=datetime.now(),updatedAt=datetime.now())
-    inventory_item = Inventory.create(product_id=product.id,stock=stock, cost=cost, price=price, createdAt=datetime.now(),updatedAt=datetime.now())
+    # inventory_item = Inventory.create(product_id=product.id,stock=stock, cost=cost, price=price, createdAt=datetime.now(),updatedAt=datetime.now())
     return redirect('/inventory')

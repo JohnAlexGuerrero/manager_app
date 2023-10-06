@@ -14,7 +14,7 @@ class Shopping(BaseModel):
     number = CharField(max_length=10, unique=True)
     createdAt = DateField()
     expirationAt = DateField()
-    value = DecimalField(max_digits=10, decimal_places=2)
+    value = DecimalField(max_digits=10, decimal_places=2, default=0.0)
     way_to_pay = CharField(max_length=10)
     
     
@@ -23,3 +23,7 @@ class ShoppingsOrder(BaseModel):
     product = ForeignKeyField(Product, backref='shoppingsorders')
     quantity = FloatField(default=0.0)
     price = DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    total = DecimalField(max_digits=10, decimal_places=2, default=0.0)
+    
+    def save(self):
+        self.total = self.price * self.quantity

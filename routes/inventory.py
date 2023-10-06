@@ -6,9 +6,13 @@ inventory = Blueprint('inventory', __name__)
 
 @inventory.route('/inventory')
 def home():
+    page = request.args.get('page', default=1, type=int)
+    items_per_page = 10
+    
     products = Inventory.select()
-    print(products)
-    return render_template('inventory/index.html', num_items=len(products), items=products)
+    items = products.paginate(page, items_per_page)
+    print()
+    return render_template('inventory/index.html', num_items=len(items), items=items, num_pagination=round(len(products)/10))
 
 @inventory.route('/inventory/new', methods=['GET'])
 def form_product():

@@ -20,22 +20,19 @@ def home():
 @shopping.route('/shoppings/new', methods=['GET'])
 def new_invoice():
     providers = Provider.select(Provider.name)
-    inventories = Inventory.select().dicts()
+    inventories = Inventory.select()
     items = []
     
-    for inv in inventories:
+    for itm in inventories:
         product = {
-            "id": inv.id,
-            "name": inv.product.name,
-            "code": inv.product.code,
-            "stock": inv.stock,
-            "und": inv.product.unit,
-            "price": inv.price
+            "id":itm.product.code,
+            "name": itm.product.name,
+            "stock":itm.stock,
+            "unit":itm.product.unit,
+            "price": itm.price
         }
         
         items.append(product)
-    print((items))
-    print(inventories)
     
     return render_template('shopping/new.html', providers=providers, items=items)
 
