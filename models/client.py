@@ -9,7 +9,7 @@ class BaseModel(Model):
 
 class Client(BaseModel):
     name = CharField(max_length=100)
-    num_doc = IntegerField()
+    num_doc = CharField(max_length=10,default='2222222222')
     address = CharField(max_length=100, null=True)
     phone = CharField(max_length=100, null=True)
     

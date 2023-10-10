@@ -1,0 +1,140 @@
+{% extends "index.html" %}
+
+{% block title %}Ventas{% endblock title %}
+
+{% block content %}
+<div class="container p-3">
+
+
+
+    <form action="/clients/edit">
+        <div class="row">
+            <div class="mb-3 col">
+                <label for="exampleInputEmail1" class="form-label">Nombre</label>
+                <input type="text" class="form-control form-control-sm" id="search-name" name="name" autocomplete="off">
+                <ul class="list-group list-group-flush" id="list-clients">
+                </ul>
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Crear Cliente</button>
+
+            </div>
+            <div class="mb-3 col">
+                <label for="exampleInputEmail1" class="form-label">Número de documento</label>
+                <input type="text" class="form-control form-control-sm" id="clientId" name="num_doc" autocomplete="off">
+            </div>
+            <div class="mb-3 col">
+                <label for="exampleInputEmail1" class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="clientAddress" name="address" autocomplete="off">
+            </div>
+            <div class="mb-3 col">
+                <label for="exampleInputEmail1" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="clientPhone" name="phone" autocomplete="off">
+            </div>
+        </div>
+    </form> 
+</div>
+{% endblock content %}
+
+{% block content_cavas %}
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Nuevo Cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form action="/clients/new" method="POST">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="name" name="name" autocomplete="off">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Documento de identidad</label>
+              <input type="text" class="form-control-sm form-control" id="num_document" name="num_doc">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Dirección</label>
+              <input type="text" class="form-control-sm form-control" id="address" name="address">
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Número de contacto</label>
+              <input type="text" class="form-control-sm form-control" id="phone" name="phone">
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+    </div>
+</div>
+{% endblock content_cavas %}
+
+
+{% block script_js %}
+<script>
+    const nameClient = document.getElementById('search-name')
+    const listClients = document.getElementById("list-clients")
+    const clients = []
+
+
+    nameClient.addEventListener("input", ()=>{
+        const resClients = filterClient(nameClient.value)
+
+        if(nameClient.value == ''){
+            listClients.innerHTML = ``
+        }else{
+            listClients.innerHTML = ``
+
+            resClients.map(el => {
+                addClientToList(el)
+            })
+        }
+    })
+
+    
+    const getClients = ()=>{
+        fetch('/api/clients/all')
+        .then(res => res.json())
+        .then(response => {
+            response.forEach(el =>{
+                let client = {
+                    id: el.id, name:el.name,document:el.num_doc, address:el.address, phone:el.phone
+                }
+
+                clients.push(client)
+            })
+        })
+
+    }
+
+    const filterClient = (name)=>{
+        let resClients = clients.filter(person => person.name.toLowerCase().includes(name))
+        return resClients
+    }
+
+    const addClientToList = (obj)=>{
+        const li = document.createElement('li')
+        li.classList.add("list-group-item")
+
+        li.innerHTML = `
+            <li id="client-${obj.id}">
+                <button type="button" class="btn" onclick="selectedItem(${obj.id})">${obj.name}</button>
+            </li>
+        `
+
+        listClients.appendChild(li)
+    }
+
+    const selectedItem = id =>{
+        const numId = document.getElementById('clientId')
+        const address = document.getElementById('clientAddress')
+        const phone = document.getElementById('clientPhone')
+
+        const client = clients.filter(person => person.id === id)
+        console.log(client)
+        nameClient.value = client[0].name
+        numId.value = client[0].document
+        phone.value = client[0].phone
+    }
+
+
+    getClients()
+
+</script>
+{% endblock script_js %}
+

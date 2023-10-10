@@ -12,4 +12,4 @@ class Sale(BaseModel):
     client = ForeignKeyField(Client, backref='sales')
     number = CharField(max_length=20, unique=True)
     createdAt = DateField()
-    value = DecimalField(max_digits=10, decimal_places=2, defult=0.0)
+    value = DecimalField(max_digits=10, decimal_places=2, default=0.0)
