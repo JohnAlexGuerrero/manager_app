@@ -21,9 +21,6 @@ def edit_client():
 
 @client.route('/api/clients/all', methods=['GET'])
 def all():
-#        items = HomeCarousel.select()
-#    items = [model_to_dict(item) for item in items]
-#    return items
     clients = Client.select()
     items = [model_to_dict(item) for item in clients]
     

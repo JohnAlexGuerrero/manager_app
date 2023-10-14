@@ -36,29 +36,36 @@
 
   <div>
     <div class="container mt-2">
-      <ol class="list-group">
-          <div class="card mb-3">
-            <div class="card-body d-flex justify-content-between">
-              <input type="checkbox" id="check_9" onClick="" value="off">
-              <div class="px-1">
-                <p class="h5 text-uppercase">aceros y perfiles hr</p>
-                <p class="h6 text-uppercase">n. rm8978</p>
-              </div>
-              <input type="text" class="m-0 p-0" value="$ 343.65" name="email" disabled>
-              <div class="btn-group">
-                <button type="button" class="btn">Apple</button>
-                <button type="button" class="btn">Samsung</button>
-                <button type="button" class="btn">Sony</button>
-              </div> 
-            </div>
+      <ul class="list-group list-group-flush">
+
+        {% for item in items  %}
+        <li class="list-group-item" id="shopping_{{item.id}}">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              {{item.number}}
+            </label>
+          </div>
+          
+          <div class="text-uppercase">
+            {{item.provider.name}}
+          </div>
+          <div>
+            {{item.createdAt}}
+          </div>
+          <div>
+            $ {{item.value}}
           </div>
         </li>
+
+        {% endfor %}
+      </ul> 
     </div>
           
   </div>
 
 
-{% endblock %}
+{% endblock %}  
 
 {% block script_js %}
   <script>
